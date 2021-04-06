@@ -7,4 +7,4 @@ user should input two names for the teams and play for both team(which is really
 mainly focused on using OOP principles in a real project.
 suggest any changes that can be made..........
 
-*A file with bunch of sql queries can be found*
+*Queries can be found in the file createtable_insertdata.sql*
