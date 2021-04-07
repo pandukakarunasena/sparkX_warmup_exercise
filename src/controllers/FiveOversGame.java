@@ -1,9 +1,14 @@
+package controllers;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
+import models.BattingPlayer;
+import models.Team;
+import models.TeamState;
 
-public class FiveOversGame implements Game{
+public class FiveOversGame implements Game {
 
     private List<Team> teams;
 
@@ -70,7 +75,7 @@ public class FiveOversGame implements Game{
         System.out.format( formatPlayer, "PLAYER", "SCORE");
 
         for(Team t: teams ){
-            for (BattingPlayer p: t.getBattingPlayers()){
+            for ( BattingPlayer p: t.getBattingPlayers()){
                 String scoreDetails = p.getScore() + " (" + p.getNumberOfBallsFaced() + ") balls";
                 System.out.format( formatPlayer, p.getNo(),scoreDetails);
             }

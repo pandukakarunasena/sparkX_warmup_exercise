@@ -1,5 +1,7 @@
 import static org.junit.jupiter.api.Assertions.*;
 
+import models.BattingPlayer;
+import models.BattingPlayerState;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.RepeatedTest;
