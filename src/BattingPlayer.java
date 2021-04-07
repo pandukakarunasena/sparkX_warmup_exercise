@@ -1,5 +1,6 @@
 import java.util.Random;
 
+
 public class BattingPlayer extends Player{
 
     private int score;
