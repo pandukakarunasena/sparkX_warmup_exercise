@@ -3,7 +3,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
 
-public class FiveOversGame extends Game{
+public class FiveOversGame implements Game{
 
     private List<Team> teams;
 
@@ -17,6 +17,7 @@ public class FiveOversGame extends Game{
         return teams;
     }
 
+    @Override
     public void toss(){
         //generate 0 or 1 from random number
         int toss = new Random().nextInt(2);
@@ -30,6 +31,7 @@ public class FiveOversGame extends Game{
         System.out.println("team "+ wonTossTeam.getName()+ " won the toss");
     }
 
+    @Override
     public void start(){
         Team firstBattingTeam = teams.get(0);
         firstBattingTeam.play(-1);
