@@ -1,4 +1,4 @@
 public interface Game {
-    public void start();
-    public void toss();
+    void start();
+    void toss();
 }
