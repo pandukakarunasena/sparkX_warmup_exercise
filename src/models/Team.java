@@ -62,16 +62,13 @@ public class Team {
             if(this.score > targetScore && targetScore != -1){
                 return TeamState.GAME_WON;
             }
-
             if(wickets < FiveOversGameRules.WICKETS && balls < NO_OF_BALLS){
-
-
                 if( inputValidator( input )){
                     BattingPlayerState playerState = currentBatter.bat();
 
                     if(playerState.equals(BattingPlayerState.OUT)){
-                        wickets += 1;
-                        if(wickets == FiveOversGameRules.WICKETS){
+                        this.wickets += 1;
+                        if(this.wickets == FiveOversGameRules.WICKETS){
                             this.allOut = true;
                             return TeamState.INNING_OVER;
                         }
@@ -81,6 +78,7 @@ public class Team {
                     }
 
                     if(playerState.equals(BattingPlayerState.SIDE_CHANGE)){
+                        System.out.println("side changed");
                         score += currentBatter.getCurrentPlay();
                         currentBatter.setStriking(false);
                         currentBatter = changeTheSides(nowPlaying, currentBatter);
