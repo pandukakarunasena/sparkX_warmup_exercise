@@ -95,14 +95,14 @@ public class Team {
             }else{
                 if(wickets == FiveOversGameRules.WICKETS){
                     this.allOut = true;
-                    System.out.println(name+ " all out");
+                    System.out.println(this.name+ " all out");
                 }
                 if(balls == FiveOversGameRules.BALLS_PER_OVER* FiveOversGameRules.OVERS){
                     this.oversFinished = true;
-                    System.out.println(name+ " overs finished");
+                    System.out.println(this.name+ " overs finished");
 
                 }
-                System.out.println(name + " inning is over: SCORE " + score);
+                System.out.println(this.name + " inning is over: SCORE " + score);
                 return TeamState.INNING_OVER;
             }
         }
