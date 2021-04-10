@@ -1,6 +1,6 @@
 package models;
 
-public enum BattingPlayerState {
+public enum PlayerState {
     STRIKING,
     SIDE_CHANGE,
     OUT

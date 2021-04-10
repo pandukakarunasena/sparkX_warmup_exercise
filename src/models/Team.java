@@ -7,12 +7,12 @@ import java.util.Scanner;
 
 public class Team {
     private String name;
-    private List<BattingPlayer> players = new ArrayList<>();
+    private List<Player> players = new ArrayList<>();
     private int score;
     private int wickets;
     private int balls;
-    private  BattingPlayer currentBatter;
-    private List<BattingPlayer> nowPlaying = new ArrayList<>();
+    private  Player currentBatter;
+    private List<Player> nowPlaying = new ArrayList<>();
     private boolean allOut;
     private boolean oversFinished;
     private boolean won;
@@ -26,7 +26,7 @@ public class Team {
         this.wickets = 0;
         this.balls = 0;
         for(int i = 0; i < FiveOversGameRules.NO_OF_PLAYERS; i++){
-            players.add(new BattingPlayer(i));
+            players.add(new Player(i));
         }
     }
 
@@ -41,7 +41,7 @@ public class Team {
         return wickets;
     }
     public void setGameWon(boolean won) { this.won = won; }
-    public List<BattingPlayer> getBattingPlayers() {
+    public List<Player> getPlayers() {
         return players;
     }
     public boolean isOversFinished() {
@@ -64,9 +64,9 @@ public class Team {
             }
             if(wickets < FiveOversGameRules.WICKETS && balls < NO_OF_BALLS){
                 if( inputValidator( input )){
-                    BattingPlayerState playerState = currentBatter.bat();
+                    PlayerState playerState = currentBatter.bat();
 
-                    if(playerState.equals(BattingPlayerState.OUT)){
+                    if(playerState.equals(PlayerState.OUT)){
                         this.wickets += 1;
                         if(this.wickets == FiveOversGameRules.WICKETS){
                             this.allOut = true;
@@ -77,7 +77,7 @@ public class Team {
                         currentBatter.setStriking(false);
                     }
 
-                    if(playerState.equals(BattingPlayerState.SIDE_CHANGE)){
+                    if(playerState.equals(PlayerState.SIDE_CHANGE)){
                         System.out.println("side changed");
                         score += currentBatter.getCurrentPlay();
                         currentBatter.setStriking(false);
@@ -85,7 +85,7 @@ public class Team {
                         currentBatter.setStriking(true);
                     }
 
-                    if(playerState.equals(BattingPlayerState.STRIKING)){
+                    if(playerState.equals(PlayerState.STRIKING)){
                         score += currentBatter.getCurrentPlay();
                     }
                     System.out.println(name + " : "+ (score+1) + "/" + wickets + " (" + balls/ FiveOversGameRules.BALLS_PER_OVER + "."+ balls% FiveOversGameRules.BALLS_PER_OVER +" overs )");
@@ -120,33 +120,33 @@ public class Team {
     }
 
     //select next batter when the current batter is dismissed
-    private BattingPlayer selectNextBatter(BattingPlayer dismissedBattingPlayer, List<BattingPlayer> teamBattingPlayers, List<BattingPlayer> nowPlaying){
-        BattingPlayer nextBattingPlayer;
+    private Player selectNextBatter(Player dismissedPlayer, List<Player> teamPlayers, List<Player> nowPlaying){
+        Player nextPlayer;
 
         //take the no of the nextBatter
         int next = Math.max(nowPlaying.get(0).getNo(), nowPlaying.get(1).getNo()) + 1;
 
         //remove the dismissed player from the nowPlaying
-        nowPlaying.remove(dismissedBattingPlayer);
+        nowPlaying.remove(dismissedPlayer);
 
         //add the next PLayer to the nowPlaying
-        nextBattingPlayer = teamBattingPlayers.get(next);
-        nowPlaying.add(nextBattingPlayer);
+        nextPlayer = teamPlayers.get(next);
+        nowPlaying.add(nextPlayer);
 
         //return the nextBatter as the currentBatter
-        System.out.println("next to bat: PLAYER "+ nextBattingPlayer.getNo());
-        return nextBattingPlayer;
+        System.out.println("next to bat: PLAYER "+ nextPlayer.getNo());
+        return nextPlayer;
     }
 
     //change the sides when a Batter scores a odd number of runs
-    private BattingPlayer changeTheSides(List<BattingPlayer> nowPlaying, BattingPlayer currentBatter){
-        BattingPlayer sideChangedBattingPlayer = null;
-        for(BattingPlayer p: nowPlaying){
+    private Player changeTheSides(List<Player> nowPlaying, Player currentBatter){
+        Player sideChangedPlayer = null;
+        for(Player p: nowPlaying){
             if(currentBatter.getNo() != p.getNo()){
-                sideChangedBattingPlayer = p;
+                sideChangedPlayer = p;
             }
         }
-        return sideChangedBattingPlayer;
+        return sideChangedPlayer;
     }
 
     private boolean inputValidator(Scanner input){

@@ -11,7 +11,7 @@ public class ScoreBoard {
         System.out.format( formatPlayer, "PLAYER", "SCORE");
 
         for(Team t: teams ){
-            for ( BattingPlayer p: t.getBattingPlayers()){
+            for ( Player p: t.getPlayers()){
                 String scoreDetails = p.getScore() + " (" + p.getNumberOfBallsFaced() + ") balls";
                 System.out.format( formatPlayer, p.getNo(),scoreDetails);
             }
