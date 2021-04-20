@@ -1,9 +1,11 @@
 package models;
 
-import controllers.FiveOversGameRules;
+import utils.FiveOversGameRules;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import utils.PlayerState;
+import utils.TeamState;
 
 public class Team {
     private String name;
@@ -111,8 +113,8 @@ public class Team {
 
     //send two batsmen to the ground choose one as the opening batman
     private void initializeTeam(){
-        this.nowPlaying.clear();
-        this.currentBatter = null;
+//        this.nowPlaying.clear();
+//        this.currentBatter = null;
         this.nowPlaying.add(players.get(0));
         this.nowPlaying.add(players.get(1));
         this.currentBatter = players.get(0);
@@ -151,9 +153,9 @@ public class Team {
 
     private boolean inputValidator(Scanner input){
         System.out.println();
-        System.out.println("balling...., press B to bat");
+        System.out.println("balling...., press B/b to bat");
         while(!input.nextLine().equalsIgnoreCase( "B" )){
-            System.out.println("B for BAT");
+            System.out.println("B/b for BAT");
             input.nextLine();
         }
         return true;

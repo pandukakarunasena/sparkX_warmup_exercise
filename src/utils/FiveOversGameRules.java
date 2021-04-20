@@ -1,4 +1,4 @@
-package controllers;
+package utils;
 
 public class FiveOversGameRules {
     public static int OVERS = 5;

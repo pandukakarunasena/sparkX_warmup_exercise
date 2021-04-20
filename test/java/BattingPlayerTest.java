@@ -1,5 +1,5 @@
 import models.Player;
-import models.PlayerState;
+import utils.PlayerState;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.RepeatedTest;

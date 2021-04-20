@@ -4,10 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
-import models.BattingPlayer;
 import models.ScoreBoard;
 import models.Team;
-import models.TeamState;
+import utils.TeamState;
 
 public class FiveOversGame implements Game {
 
@@ -54,8 +53,8 @@ public class FiveOversGame implements Game {
         for(int i= 0; i < 2; i++){
             System.out.println("team "+ (i+1) + " name:");
             String input = scanner.nextLine();
-            while(input == null || input.isEmpty()){
-                System.out.println("error");
+            while(input == null || input.isEmpty() ){
+                System.out.println("invalid input.... please enter something");
                 input = scanner.nextLine();
             }
             Team team = new Team(input);

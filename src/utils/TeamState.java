@@ -1,4 +1,4 @@
-package models;
+package utils;
 
 public enum TeamState {
     GAME_WON,

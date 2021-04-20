@@ -1,7 +1,8 @@
 package models;
 
-import controllers.FiveOversGameRules;
+import utils.FiveOversGameRules;
 import java.util.List;
+import utils.TeamState;
 
 public class ScoreBoard {
     public ScoreBoard(){ }
