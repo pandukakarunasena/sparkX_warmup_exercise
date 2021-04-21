@@ -62,12 +62,12 @@ public class Team {
 
         for(int balls = 0; balls <= NO_OF_BALLS; balls++){
             getTeamInningDecisionStates( targetScore );
-            if(wickets < FiveOversGameRules.WICKETS && balls < NO_OF_BALLS){
-                if( inputValidator( input )) {
-                    playerBatting();
-                }
+
+            if( inputValidator( input )) {
+                playerBatting();
             }
         }
+
         System.out.println(this.name + " inning is over: SCORE " + score);
         return TeamState.INNING_OVER;
     }
@@ -149,7 +149,7 @@ public class Team {
             this.wickets += 1;
             currentBatter.setOut( true );
             currentBatter.setStriking( false );
-            if(wickets <= players.size() - 1){
+            if(wickets < FiveOversGameRules.WICKETS - 1){
                 currentBatter = selectNextBatter( currentBatter, players, nowPlaying );
             }
 
