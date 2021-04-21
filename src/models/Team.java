@@ -61,52 +61,10 @@ public class Team {
         int NO_OF_BALLS = FiveOversGameRules.OVERS* FiveOversGameRules.BALLS_PER_OVER;
 
         for(int balls = 0; balls <= NO_OF_BALLS; balls++){
-            if(this.score > targetScore && targetScore != -1){
-                return TeamState.GAME_WON;
-            }
-
-            if(wickets == FiveOversGameRules.WICKETS){
-                this.allOut = true;
-                System.out.println(this.name+ " all out");
-                return TeamState.INNING_OVER;
-            }
-
-            if(balls == FiveOversGameRules.BALLS_PER_OVER* FiveOversGameRules.OVERS){
-                this.oversFinished = true;
-                System.out.println(this.name+ " overs finished");
-                return TeamState.INNING_OVER;
-            }
-
+            getTeamInningDecisionStates( targetScore );
             if(wickets < FiveOversGameRules.WICKETS && balls < NO_OF_BALLS){
                 if( inputValidator( input )) {
-                    PlayerState playerState = currentBatter.bat();
-
-                    if ( playerState.equals( PlayerState.OUT ) ) {
-                        this.wickets += 1;
-
-                        if ( this.wickets == FiveOversGameRules.WICKETS ) {
-                            this.allOut = true;
-                            return TeamState.INNING_OVER;
-                        }
-                        currentBatter.setOut( true );
-                        currentBatter.setStriking( false );
-                        currentBatter = selectNextBatter( currentBatter, players, nowPlaying );
-
-                    }
-
-                    if ( playerState.equals( PlayerState.SIDE_CHANGE ) ) {
-                        System.out.println( "side changed" );
-                        score += currentBatter.getCurrentPlay();
-                        currentBatter.setStriking( false );
-                        currentBatter = changeTheSides( nowPlaying, currentBatter );
-                        currentBatter.setStriking( true );
-                    }
-
-                    if ( playerState.equals( PlayerState.STRIKING ) ) {
-                        score += currentBatter.getCurrentPlay();
-                    }
-
-                    System.out.println( name + " : " + (score + 1) + "/" + wickets + " (" + balls / FiveOversGameRules.BALLS_PER_OVER + "." + balls % FiveOversGameRules.BALLS_PER_OVER + " overs )" );
+                    playerBatting();
                 }
             }
         }
@@ -162,5 +120,53 @@ public class Team {
             input.nextLine();
         }
         return true;
+    }
+
+    private TeamState getTeamInningDecisionStates(int targetScore){
+        TeamState teamState = null;
+        if(this.score > targetScore && targetScore != -1){
+            teamState = TeamState.GAME_WON;
+        }
+
+        if(wickets == FiveOversGameRules.WICKETS){
+            this.allOut = true;
+            System.out.println(this.name+ " all out");
+            teamState =  TeamState.INNING_OVER;
+        }
+
+        if(balls == FiveOversGameRules.BALLS_PER_OVER* FiveOversGameRules.OVERS){
+            this.oversFinished = true;
+            System.out.println(this.name+ " overs finished");
+            teamState=  TeamState.INNING_OVER;
+        }
+        return teamState;
+    }
+
+    private void playerBatting(){
+        PlayerState playerState = currentBatter.bat();
+
+        if ( playerState.equals( PlayerState.OUT ) ) {
+            this.wickets += 1;
+            currentBatter.setOut( true );
+            currentBatter.setStriking( false );
+            if(wickets <= players.size() - 1){
+                currentBatter = selectNextBatter( currentBatter, players, nowPlaying );
+            }
+
+        }
+
+        if ( playerState.equals( PlayerState.SIDE_CHANGE ) ) {
+            System.out.println( "side changed" );
+            score += currentBatter.getCurrentPlay();
+            currentBatter.setStriking( false );
+            currentBatter = changeTheSides( nowPlaying, currentBatter );
+            currentBatter.setStriking( true );
+        }
+
+        if ( playerState.equals( PlayerState.STRIKING ) ) {
+            score += currentBatter.getCurrentPlay();
+        }
+
+        System.out.println( name + " : " + (score + 1) + "/" + wickets + " (" + balls / FiveOversGameRules.BALLS_PER_OVER + "." + balls % FiveOversGameRules.BALLS_PER_OVER + " overs )" );
     }
 }
