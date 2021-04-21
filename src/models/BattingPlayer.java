@@ -1,6 +1,7 @@
 package models;
 
 import java.util.Random;
+import utils.FiveOversGameRules;
 import utils.PlayerState;
 
 public class BattingPlayer extends Player {
@@ -18,20 +19,23 @@ public class BattingPlayer extends Player {
         int play = new Random().nextInt(8);
 
         //conditionally make the play
-        if (play == 5 || play == 7) {
+        if (play == FiveOversGameRules.CAUGHT_OUT || play == FiveOversGameRules.BOWLED_OUT) {
             super.setOut( true );
 
-            if (play == 5) {
-                super.setOutBy("bowled");
+            if (play == FiveOversGameRules.BOWLED_OUT) {
+                super.setOutBy(PlayerState.BOWLED_OUT);
                 System.out.println("bowled");
             }
-            if (play == 7) {
-                super.setOutBy("caught");
+
+            if (play == FiveOversGameRules.CAUGHT_OUT) {
+                super.setOutBy(PlayerState.CAUGHT_OUT);
                 System.out.println("caught");
             }
+
             System.out.println("player " + super.getNo() + " is out");
             playerState =  PlayerState.OUT;
             super.setCurrentPlay(0);
+
         }else{
             if(play%2 == 0){
                 super.setScore(play);
@@ -45,18 +49,4 @@ public class BattingPlayer extends Player {
         }
         return playerState;
     }
-
-
-    @Override
-    public void ball() {
-
-    }
-
-
-    @Override
-    public void field() {
-
-    }
-
-
 }

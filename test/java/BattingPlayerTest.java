@@ -1,3 +1,4 @@
+import models.BattingPlayer;
 import models.Player;
 import utils.PlayerState;
 import org.junit.jupiter.api.Assertions;
@@ -10,7 +11,7 @@ class PlayerTest {
     @DisplayName("Should create a PlayerState Object")
     @RepeatedTest( 10 )
     void shouldCreatePlayerStateObject() {
-        player = new Player( 01 );
+        player = new BattingPlayer( 01 );
         PlayerState playerState = player.bat();
         int currentPlay = player.getCurrentPlay();
         if(currentPlay == 7 || currentPlay == 8){

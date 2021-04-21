@@ -28,7 +28,7 @@ public class Team {
         this.wickets = 0;
         this.balls = 0;
         for(int i = 0; i < FiveOversGameRules.NO_OF_PLAYERS; i++){
-            players.add(new Player(i));
+            players.add(new BattingPlayer(i));
         }
     }
 
@@ -64,50 +64,53 @@ public class Team {
             if(this.score > targetScore && targetScore != -1){
                 return TeamState.GAME_WON;
             }
+
+            if(wickets == FiveOversGameRules.WICKETS){
+                this.allOut = true;
+                System.out.println(this.name+ " all out");
+                return TeamState.INNING_OVER;
+            }
+
+            if(balls == FiveOversGameRules.BALLS_PER_OVER* FiveOversGameRules.OVERS){
+                this.oversFinished = true;
+                System.out.println(this.name+ " overs finished");
+                return TeamState.INNING_OVER;
+            }
+
             if(wickets < FiveOversGameRules.WICKETS && balls < NO_OF_BALLS){
-                if( inputValidator( input )){
+                if( inputValidator( input )) {
                     PlayerState playerState = currentBatter.bat();
 
-                    if(playerState.equals(PlayerState.OUT)){
+                    if ( playerState.equals( PlayerState.OUT ) ) {
                         this.wickets += 1;
-                        if(this.wickets == FiveOversGameRules.WICKETS){
+
+                        if ( this.wickets == FiveOversGameRules.WICKETS ) {
                             this.allOut = true;
                             return TeamState.INNING_OVER;
                         }
-                        currentBatter = selectNextBatter(currentBatter, players, nowPlaying);
-                        currentBatter.setOut(true);
-                        currentBatter.setStriking(false);
+                        currentBatter.setOut( true );
+                        currentBatter.setStriking( false );
+                        currentBatter = selectNextBatter( currentBatter, players, nowPlaying );
+
                     }
 
-                    if(playerState.equals(PlayerState.SIDE_CHANGE)){
-                        System.out.println("side changed");
+                    if ( playerState.equals( PlayerState.SIDE_CHANGE ) ) {
+                        System.out.println( "side changed" );
                         score += currentBatter.getCurrentPlay();
-                        currentBatter.setStriking(false);
-                        currentBatter = changeTheSides(nowPlaying, currentBatter);
-                        currentBatter.setStriking(true);
+                        currentBatter.setStriking( false );
+                        currentBatter = changeTheSides( nowPlaying, currentBatter );
+                        currentBatter.setStriking( true );
                     }
 
-                    if(playerState.equals(PlayerState.STRIKING)){
+                    if ( playerState.equals( PlayerState.STRIKING ) ) {
                         score += currentBatter.getCurrentPlay();
                     }
-                    System.out.println(name + " : "+ (score+1) + "/" + wickets + " (" + balls/ FiveOversGameRules.BALLS_PER_OVER + "."+ balls% FiveOversGameRules.BALLS_PER_OVER +" overs )");
-                }else{
-                    System.out.println("error");
-                }
-            }else{
-                if(wickets == FiveOversGameRules.WICKETS){
-                    this.allOut = true;
-                    System.out.println(this.name+ " all out");
-                }
-                if(balls == FiveOversGameRules.BALLS_PER_OVER* FiveOversGameRules.OVERS){
-                    this.oversFinished = true;
-                    System.out.println(this.name+ " overs finished");
 
+                    System.out.println( name + " : " + (score + 1) + "/" + wickets + " (" + balls / FiveOversGameRules.BALLS_PER_OVER + "." + balls % FiveOversGameRules.BALLS_PER_OVER + " overs )" );
                 }
-                System.out.println(this.name + " inning is over: SCORE " + score);
-                return TeamState.INNING_OVER;
             }
         }
+        System.out.println(this.name + " inning is over: SCORE " + score);
         return TeamState.INNING_OVER;
     }
 

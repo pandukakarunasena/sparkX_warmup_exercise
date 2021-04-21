@@ -6,7 +6,7 @@ public abstract class Player{
     private int no;
     private int score;
     private boolean out;
-    private String outBy;
+    private PlayerState outBy;
     private int numberOfBallsFaced;
     private boolean striking;
     private int currentPlay;
@@ -44,7 +44,7 @@ public abstract class Player{
     protected void setCurrentPlay( int play ) {
         this.currentPlay = play;
     }
-    protected void setOutBy( String outBy ) {
+    protected void setOutBy( PlayerState outBy ) {
         this.outBy = outBy;
     }
     protected void setNumbersOfBallsFaced() {
@@ -52,10 +52,6 @@ public abstract class Player{
     }
 
     public abstract PlayerState bat();
-    public abstract void ball();
-    public abstract void field();
-
-
-
-
+    public void ball(){};
+    public void field(){};
 }
